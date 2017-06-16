@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Drag</title>
+    <style type="text/css">
+        * {
+            margin:0;
+            padding:0;
+        }
+        body {
+            background:#eee;
+        }
+        #box {
+            width:100px;
+            height:100px;
+            background:pink;
+            border:1px #000 solid;
+            position:absolute;
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload = function(){
+            var oDiv = document.querySelector('#box');
+            oDiv.onmousedown = function(evt){
+                var e = evt || window.event;
+                var disX = e.clientX - oDiv.offsetLeft;
+                var disY = e.clientY - oDiv.offsetTop;
+                document.onmousemove = function(evt){
+                    var e = evt || window.event;
+                    var l = e.clientX - disX;
+                    var t = e.clientY - disY;
+                    if(l < 0){
+                        l = 0
+                    }
+                    if(l > document.documentElement.clientWidth-oDiv.offsetWidth){
+                        l = document.documentElement.clientWidth-oDiv.offsetWidth
+                    }
+                    if(t < 0){
+                        t = 0;
+                    }
+                    if(t > document.documentElement.clientHeight - oDiv.offsetHeight){
+                        t = document.documentElement.clientHeight - oDiv.offsetHeight;
+                    }
+                    oDiv.style.left = l + 'px';
+                    oDiv.style.top = t + 'px';
+                };
+                document.onmouseup = function(){
+                    document.onmousemove = null;
+                };
+            };
+        };
+    </script>
+</head>
+<body>
+    <div id="box"></div>
+</body>
+</html>
